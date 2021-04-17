@@ -1,4 +1,4 @@
-public class Solution {
+public class Solution_115 {
     public static void main(String[] args){
         // String s = "Merry";
         // System.out.println("Christmas");
