@@ -13,6 +13,7 @@ public class Solution108 {
 //        System.out.print(" будет ");
 //        System.out.print("пять");
         System.out.print(a + b);
+
     }
 }
 
