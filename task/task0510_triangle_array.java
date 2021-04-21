@@ -46,7 +46,10 @@ public class Solution {
         result[8] = new int[9];
         result[9] = new int[10];
         for (int i = 0; i < result.length; i++) {
+            int count = i;
             for (int j = 0; j < result[i].length; j++) {
+                result[i][j] = count;
+                count++;
                 System.out.print(result[i][j] + " ");
             }
             System.out.println(" ");
