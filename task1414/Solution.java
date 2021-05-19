@@ -1,38 +1,56 @@
-package com.javarush.task.pro.task14.task1414;
+package com.javarush.task.task14.task1414;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /* 
-Готовим коктейли
+MovieFactory
 */
 
 public class Solution {
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    public static final String OUTPUT_FORMAT = "Метод %s вызван из строки %d класса %s в файле %s.\n";
-
-    public static void main(String[] args) {
-        makeScrewdriver();
-    }
-
-    public static void printStackTrace(StackTraceElement[] stackTrace) {
-        for (StackTraceElement element : stackTrace){
-            System.out.printf(
-                    OUTPUT_FORMAT,
-                    element.getMethodName(),
-                    element.getLineNumber(),
-                    element.getClassName(),
-                    element.getFileName()
-                    );
+        String key = null;
+        while ((key = reader.readLine()) != null) {
+            Movie movie = MovieFactory.getMovie(key);
+            if (movie == null) {
+                return;
+            }
+            System.out.println(movie.getClass().getSimpleName());
         }
     }
 
-    static void makeScrewdriver() {
-        addJuice();
+    static class MovieFactory {
+        static Movie getMovie(String key) {
+            Movie movie = null;
+            switch (key) {
+                case "soapOpera":
+                    movie = new SoapOpera();
+                    break;
+                case "cartoon":
+                    movie = new Cartoon();
+                    break;
+                case "thriller":
+                    movie = new Thriller();
+                    break;
+            }
+            return movie;
+        }
     }
 
-    static void addJuice() {
-        addVodka();
+    public static class Movie {
     }
 
-    static void addVodka() {
-        printStackTrace(Thread.currentThread().getStackTrace());
+    public static class SoapOpera extends Movie {
+    }
+
+    public static class Cartoon extends Movie {
+
+    }
+
+    public static class Thriller extends Movie {
+
     }
 }
