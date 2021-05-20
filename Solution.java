@@ -1,34 +1,36 @@
-package com.javarush.task.pro.task12.task1201;
+package com.javarush.task.task14.task1420;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /* 
-Автоупаковка
+НОД
 */
 
-import static java.lang.Byte.valueOf;
-
 public class Solution {
-    byte byteValue;
-    short shortValue;
-    int intValue;
-    long longValue;
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    float floatValue;
-    double doubleValue;
+        int first = Integer.parseInt(reader.readLine());
+        int second = Integer.parseInt(reader.readLine());
 
-    char charValue;
-    boolean booleanValue;
+        System.out.println(getNOD(first, second));
+    }
 
-    Byte byteValueBox = Byte.valueOf(byteValue);
-    Short shortValueBox = Short.valueOf(shortValue);
-    Integer integerValueBox = Integer.valueOf(intValue);
-    Long longValueBox = Long.valueOf(longValue);
+    private static int getNOD(int first, int second) {
+        if (first < 1 || second < 1) {
+            throw new IllegalArgumentException();
+        }
 
-    Float floatValueBox = Float.valueOf(floatValue);
-    Double doubleValueBox = Double.valueOf(doubleValue);
-
-    Character characterValueBox = Character.valueOf(charValue);
-    Boolean booleanValueBox = Boolean.valueOf(booleanValue);
-
-    public static void main(String[] args) {
+        while (first != second) {
+            if (first > second) {
+                first -= second;
+            }
+            if (second > first) {
+                second -= first;
+            }
+        }
+        return first;
     }
 }
