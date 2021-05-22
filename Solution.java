@@ -1,24 +1,32 @@
-package com.javarush.task.task15.task1514;
+package com.javarush.task.task15.task1531;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
 
 /* 
-Статики-1
+Факториал
 */
 
 public class Solution {
-    static Map<Double, String> labels = new HashMap<Double, String>();
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    static {
-        labels.put(5.5, "five and a half");
-        labels.put(7.1, "seven point 1");
-        labels.put(7.2, "seven point 2");
-        labels.put(7.3, "seven point 3");
-        labels.put(7.4, "seven point 4");
+        int input = Integer.parseInt(reader.readLine());
+        reader.close();
+
+        System.out.println(factorial(input));
     }
 
-    public static void main(String[] args) {
-        System.out.println(labels);
+    public static String factorial(int n) {
+        if (n < 0) return "0";
+        if (n == 0) return "1";
+        BigDecimal bd = new BigDecimal(1);
+        for (int i = 1; i <= n; i++) {
+            bd = bd.multiply(new BigDecimal(i));
+        }
+
+        return bd.toString();
     }
 }
