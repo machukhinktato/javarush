@@ -1,22 +1,30 @@
-package com.javarush.task.pro.task18.task1808;
+package com.javarush.task.task18.task1808;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.*;
 
 /* 
-Знакомство со ссылками на методы
+Разделение файла
 */
 
 public class Solution {
-    public static void main(String[] args) {
-        var strings = new ArrayList<String>();
-        Collections.addAll(strings, "Hello", "Amigo", "JavaRush", "CodeGym");
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String inputFile = reader.readLine();
+        String outputFile1 = reader.readLine();
+        String outputFile2 = reader.readLine();
 
-        print(strings);
-    }
+        try (FileInputStream fileInputStream = new FileInputStream(inputFile);
+             FileOutputStream fileOutputStream1 = new FileOutputStream(outputFile1);
+             FileOutputStream fileOutputStream2 = new FileOutputStream(outputFile2)) {
 
-    public static void print(ArrayList<String> strings) {
-//        strings.forEach(string -> System.out.println(string));
-        strings.forEach(System.out::println);
+            int halfOfFile = (fileInputStream.available() + 1) / 2;
+            int numberOfByte = 0;
+            while (fileInputStream.available() > 0) {
+                if (numberOfByte < halfOfFile) {
+                    fileOutputStream1.write(fileInputStream.read());
+                    numberOfByte++;
+                } else fileOutputStream2.write(fileInputStream.read());
+            }
+        }
     }
 }
