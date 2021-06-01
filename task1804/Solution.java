@@ -1,34 +1,33 @@
-package com.javarush.task.pro.task18.task1804;
+package com.javarush.task.task18.task1804;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Arrays;
 
 /* 
-Знакомство с лямбда-выражением
+Самые редкие байты
 */
 
 public class Solution {
-
-    public static void main(String[] args) {
-        var numbers = new ArrayList<Integer>();
-
-        Collections.addAll(numbers, 123, -6, 12, 0, 44, 5678, -350);
-
-        sortNumbers(numbers);
-
-        for (Integer number : numbers) {
-            System.out.println(number);
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = reader.readLine();
+        int[] byteCountArray = new int[256];
+        try (FileInputStream fileInputStream = new FileInputStream(fileName)) {
+            while (fileInputStream.available() > 0) {
+                byteCountArray[fileInputStream.read()] += 1;
+            }
         }
-    }
-
-    public static void sortNumbers(ArrayList<Integer> numbers) {
-//        Comparator<Integer> comparator = new Comparator<Integer>() {
-//            @Override
-//            public int compare(Integer i1, Integer i2) {
-//                return i1 - i2;
-//            }
-//        };
-        Collections.sort(numbers, (i1, i2) -> i1 - i2);
+        int minCount = Integer.MAX_VALUE;
+        for (int byteCount : byteCountArray) {
+            if (byteCount > 0 && byteCount < minCount) minCount = byteCount;
+        }
+        ArrayList<Integer> resultList = new ArrayList<>();
+        for (int i = 0; i < byteCountArray.length; i++) {
+            if (byteCountArray[i] == minCount) resultList.add(i);
+        }
+        for (Integer resultItem : resultList) System.out.print(resultItem + " ");
     }
 }
