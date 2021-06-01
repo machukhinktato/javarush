@@ -1,27 +1,33 @@
-package com.javarush.task.pro.task18.task1803;
+package com.javarush.task.task18.task1803;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
+
+/* 
+Самые частые байты
+*/
 
 public class Solution {
-    public static ArrayList<JavaRushMentor> mentors = new ArrayList<>();
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = reader.readLine();
 
-    public static void main(String[] args) {
-        Collections.addAll(mentors,
-                new JavaRushMentor("Джон Бобров"),
-                new JavaRushMentor("Риша"),
-                new JavaRushMentor("Эллеонора Керри"),
-                new JavaRushMentor("Ханс Нудлс"),
-                new JavaRushMentor("Ким"),
-                new JavaRushMentor("Хулио Сиеста"),
-                new JavaRushMentor("Диего"),
-                new JavaRushMentor("Лага Билаабо")
-        );
-
-        Collections.sort(mentors, new NameComparator());
-
-        for (JavaRushMentor mentor : mentors) {
-            System.out.println(mentor);
+        int[] byteCountArray = new int[256];
+        try (FileInputStream fileInputStream = new FileInputStream(fileName)) {
+            while (fileInputStream.available() > 0) {
+                byteCountArray[fileInputStream.read()] += 1;
+            }
         }
+        int maxCount = 0;
+        for (int byteCount : byteCountArray) {
+            if (byteCount > maxCount) maxCount = byteCount;
+        }
+        ArrayList<Integer> resultList = new ArrayList<>();
+        for (int i = 0; i < byteCountArray.length; i++) {
+            if (byteCountArray[i] == maxCount) resultList.add(i);
+        }
+        for (Integer resultItem : resultList) System.out.print(resultItem + " ");
     }
 }
