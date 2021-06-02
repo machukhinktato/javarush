@@ -1,27 +1,31 @@
-package com.javarush.task.pro.task18.task1819;
+package com.javarush.task.task18.task1819;
 
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 /* 
-Как быть, если в списке есть элемент null
+Объединение файлов
 */
 
 public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName1 = reader.readLine();
+        String fileName2 = reader.readLine();
 
-    public static void main(String[] args) {
-        List<String> strings = new ArrayList<>();
-        Collections.addAll(strings, "first", "second", null, "fourth", "fifth");
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try (FileInputStream fileInputStream1 = new FileInputStream(fileName1);
+             FileInputStream fileInputStream2 = new FileInputStream(fileName2)) {
 
-        printList(strings);
-    }
-
-    public static void printList(List<String> list) {
-        String text = "Этот элемент равен null";
-        list.forEach(elem -> {
-            System.out.println(Optional.ofNullable(elem).orElse(text));
-        });
+            while (fileInputStream2.available() > 0) {
+                byteArrayOutputStream.write(fileInputStream2.read());
+            }
+            while (fileInputStream1.available() > 0) {
+                byteArrayOutputStream.write(fileInputStream1.read());
+            }
+        }
+        try (FileOutputStream fileOutputStream = new FileOutputStream(fileName1)) {
+            byteArrayOutputStream.writeTo(fileOutputStream);
+        }
     }
 }
